@@ -26,4 +26,4 @@ def user_view(original_function):
 
 if __name__ == '__main__':
 	'''testing'''
-    print(check_input(5, 5))
+	print(check_input(5, 5))
