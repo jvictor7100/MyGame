@@ -1,3 +1,4 @@
 # MyGame
- Esse é um jogo de terminal escrito em python e desenvolvido enteiramente por mim.
- Nota: Se você estiver tentando executar o arquivo main.py e estiver recebendo um erro do tipo ModuleNotFoundError, copie os três arquivos .py e coloque-os em uma mesma pasta.
+This is a terminal game developed by me (jvictor7100). In simplified terms, the program chooses a random number and you must discover it. While the player guesses, hints are provided. It's simple, but i think it very enjoyable.
+
+Note: If you are trying to run the main.py file and are getting a ModuleNotFoundError, copy the python files and place them in the same folder.
