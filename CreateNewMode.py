@@ -1,11 +1,15 @@
-from Settings import Settings
+import configparser
+
+import functions as fc
 
 class CreateNewMode:
 	def __init__(self):
-		self.path = 'MyGame - 2.1\CreateNewMode>'
-		self.path_name = r'MyGame - 2.1\CreateNewMode\name>'
-		self.path_max_number = 'MyGame - 2.1\CreateNewMode\max_number>'
-		self.cfg = Settings().creator_commands
+		self.config = configparser.ConfigParser()
+		self.config.read('commands.ini')
+		self.cfg = self.config['creator']
+		self.path = 'MyGame\CreateNewMode>'
+		self.path_name = fr'{self.path}\name>'
+		self.path_max_number = f'{self.path}\max_number>'
 		self.help_message = 'Type "name" for set the mode name and type "max" for set the maximum number.'
 		self.invalid_command_message = '"{}" is not recognized as a valid command.'
 		self.name = 'custom'
@@ -23,27 +27,30 @@ class CreateNewMode:
 		while self.run:
 			user_input = input(f'\n{self.path}').lower()
 			
-			if user_input == self.cfg['COMMAND_EXIT']:
+			if user_input == self.cfg['EXIT_THE_GAME']:
 				return False
 
-			elif user_input == self.cfg['COMMAND_RETURN']:
+			elif user_input == self.cfg['RETURN_ONE_INPUT_AGO']:
 				if self.max_number > 1:
 					return self.get_informations
 				else:
 					self.run = False
 			
-			elif user_input == self.cfg['COMMAND_HELP']:
+			elif user_input == self.cfg['SEE_A_HELP_MESSAGE']:
 				print(self.help_message)
 			
-			elif user_input == self.cfg['COMMAND_SET_NAME']:
+			elif user_input == self.cfg['SET_NEW_MODE_NAME']:
 				name = self.set_name()
 				if name == False:
 					return False
 
-			elif user_input == self.cfg['COMMAND_SET_MAX_NUMBER']:
+			elif user_input == self.cfg['SET_NEW_MODE_MAXIMUM_NUMBER']:
 				max_number = self.set_max_number()
 				if max_number == False:
 					return False
+			
+			elif user_input == self.cfg['CLEAR_TERMINAL']:
+				fc.clear_terminal()
 
 			else:
 				print(self.invalid_command_message.format(user_input))

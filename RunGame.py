@@ -1,14 +1,17 @@
 from getpass import getpass
+import configparser
 
 import functions as fc
-from Settings import Settings
 
 
 class RunGame:
-	def __init__(self, random_number: int, max_number: int):
+	def __init__(self, random_number: int, max_number: int, game_mode: str):
 		self.random_number = random_number
 		self.max_number = max_number
-		self.cfg = Settings().executor_commands
+		self.game_mode = game_mode
+		self.config = configparser.ConfigParser()
+		self.config.read('commands.ini')
+		self.cfg = self.config['DEFAULT']
 		self.win_message = 'Congradulations!'
 		self.defeat_message = 'Good look next time!'
 		self.except_message = 'Type only numbers.'
@@ -19,7 +22,9 @@ class RunGame:
 	def results(self, win: bool):
 		match win:
 			case True:
-				print(f'{self.win_message}\nAttempts: {self.attempts}')
+				attempts_record = fc.get_attempts_record(self.game_mode, self.attempts)
+				
+				print(f'{self.win_message}\nAttempts: {self.attempts} / Record: {attempts_record}')
 			case False:
 				print(f'{self.defeat_message}\nAttempts: {self.attempts}')
 		
@@ -33,7 +38,7 @@ class RunGame:
 		while self.run:	
 			user_input = input('\n>>> ')
 			
-			if user_input == self.cfg['COMMAND_RETURN']:
+			if user_input == self.cfg['RETURN_ONE_INPUT_AGO']:
 				self.results(win=False)
 				self.run = False
 			else:

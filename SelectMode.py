@@ -1,13 +1,15 @@
 import os
+import configparser
 
 import functions as fc
-from Settings import Settings
 
 
 class SelectMode:
 	def __init__(self):
-		self.path = 'MyGame - 2.1\SelectMode>'
-		self.cfg = Settings().selector_commands
+		self.config = configparser.ConfigParser()
+		self.config.read('commands.ini')
+		self.cfg = self.config['selector']
+		self.path = f'MyGame\SelectMode>'
 		self.help_message = 'Type "see" to see the available modes.'
 		self.invalid_command_message = '"{}" is not recognized as a valid command.'
 		self.modes = ['baby', 'easy', 'medium', 'hard', 'insane']
@@ -18,7 +20,7 @@ class SelectMode:
 		file_name = 'personalized.json'
 		
 		if os.path.exists(file_name):
-			new_mode = fc.get_new_mode_informatins()
+			new_mode = fc.get_new_mode_informations()
 			name = new_mode['name']
 			self.modes.append(name)
 		else:
@@ -35,17 +37,20 @@ class SelectMode:
 		while self.run:
 			user_input = input(f'\n{self.path}').lower()
 			
-			if user_input == self.cfg['COMMAND_EXIT']:
+			if user_input == self.cfg['EXIT_THE_GAME']:
 				return False
 				
-			elif user_input == self.cfg['COMMAND_RETURN']:
+			elif user_input == self.cfg['RETURN_ONE_INPUT_AGO']:
 				self.run = False
 				
-			elif user_input == self.cfg['COMMAND_HELP']:
+			elif user_input == self.cfg['SEE_A_HELP_MESSAGE']:
 				print(self.help_message)
 				
-			elif user_input == self.cfg['COMMAND_SEE_MODES']:
+			elif user_input == self.cfg['SEE_AVAILABLE_MODES']:
 				print(self.see)
+			
+			elif user_input == self.cfg['CLEAR_TERMINAL']:
+				fc.clear_terminal()
 				
 			else:
 				if user_input in self.modes:

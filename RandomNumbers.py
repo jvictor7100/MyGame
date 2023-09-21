@@ -20,7 +20,7 @@ class RandomNumbers:
 		'insane': 'get_insane_number'
 	}
 
-	def __init__(self, game_mode):
+	def __init__(self, game_mode: str):
 		self.game_mode = game_mode
 		self.mim_number = 1
 		self.max_baby_number = 10
@@ -35,7 +35,7 @@ class RandomNumbers:
 		file_name = 'personalized.json'
 		
 		if os.path.exists(file_name):
-			new_mode = fc.get_new_mode_informatins()
+			new_mode = fc.get_new_mode_informations()
 			name = new_mode['name']
 			self.max_custom_number = new_mode['max_number']
 		
